@@ -1,0 +1,307 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.text-outline {
+    -webkit-text-stroke: 1.5px #1C1917;
+    color: transparent;
+}
+
+.noise-overlay {
+    position: fixed;
+    inset: 0;
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 9999;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.hero-scrub-container {
+    height: 300vh;
+    position: relative;
+    z-index: 20;
+    background-color: #EAEAE5;
+}
+
+.hero-video {
+    transform: scale(1.02);
+    will-change: transform;
+}
+
+.reveal-up {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0, 36px, 0);
+    will-change: transform, opacity, filter;
+}
+
+.hero-scroll-hint {
+    will-change: transform, opacity;
+}
+
+@keyframes scroll-line {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+.animate-scroll-line {
+    animation: scroll-line 1.5s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #EAEAE5;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d6d3d1;
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a29e;
+}
+
+/* GRADIENT TEXT from Design System 13 */
+.gt {
+    background: linear-gradient(135deg, #1C1C1C 0%, #A8A29E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Grid Snake Section Styles */
+.grid-snake-section {
+    position: relative;
+    background-color: #EAEAE5;
+    overflow: hidden;
+    min-height: 100vh;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.grid-snake-base,
+.snakes-container,
+.grid-snake-vignette {
+    pointer-events: none;
+}
+
+.grid-snake-base {
+    position: absolute;
+    inset: 0;
+    /* Linhas finas e claras */
+    background-image:
+        linear-gradient(to right, rgba(28, 25, 23, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(28, 25, 23, 0.05) 1px, transparent 1px);
+    background-size: 80px 80px;
+    background-position: 0 0;
+    z-index: 1;
+}
+
+.content-layer {
+    position: relative;
+    z-index: 100;
+    /* Altíssima prioridade para ficar acima das cobras e da grade */
+}
+
+.snakes-container {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.grid-snake-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 30%, #EAEAE5 95%);
+    z-index: 10;
+    /* Acima das cobras, abaixo do texto */
+    pointer-events: none;
+}
+
+.snake {
+    position: absolute;
+    will-change: transform;
+    /* Brilho sutil para parecer premium */
+    box-shadow: 0 0 12px rgba(28, 25, 23, 0.15);
+}
+
+.bento-card-glass {
+    background-color: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+}
+
+.bento-title-glass {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 3rem;
+    padding: 4rem 3rem;
+    width: 100%;
+}
+
+.bento-pen-image {
+    transform: rotate(-15deg) translate(2rem, 1rem);
+    transform-origin: center center;
+}
+
+
+
+/* Signature Section */
+.signature-section {
+    background-color: #EAEAE5;
+}
+
+.signature-svg {
+    overflow: visible;
+}
+
+.signature-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: 160px;
+    fill: #1c1917;
+    stroke: none;
+    clip-path: inset(0 100% 0 0);
+    /* Inicia escondido */
+}
+
+/* MARQUEE DIVIDER (3rd Fold) */
+.marquee-divider {
+    border-top: 1px solid #d6d3d1;
+    border-bottom: 1px solid #d6d3d1;
+    background-color: rgba(245, 245, 244, 0.5);
+    padding: 0.75rem 0;
+    overflow: hidden;
+    width: 100%;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes marquee-reverse {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.animate-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+}
+
+.animate-marquee-reverse {
+    display: flex;
+    width: max-content;
+    animation: marquee-reverse 40s linear infinite;
+}
+
+.marquee-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #a8a29e;
+    /* stone-400 */
+}
+
+
+
+.dot-grid {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+
+.bg-grid-subtle {
+    background-size: 60px 60px;
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+}
+
+.h-snake {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(28, 25, 23, 0.2) 20%, rgba(28, 25, 23, 0.9) 100%);
+    top: 0;
+    left: 0;
+    animation: snake-move-x linear infinite;
+}
+
+.h-snake.rev {
+    background: linear-gradient(to left, transparent, rgba(28, 25, 23, 0.2) 20%, rgba(28, 25, 23, 0.9) 100%);
+}
+
+/* Vertical Snakes */
+.v-snake {
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(28, 25, 23, 0.2) 20%, rgba(28, 25, 23, 0.9) 100%);
+    top: 0;
+    left: 0;
+    animation: snake-move-y linear infinite;
+}
+
+.v-snake.rev {
+    background: linear-gradient(to top, transparent, rgba(28, 25, 23, 0.2) 20%, rgba(28, 25, 23, 0.9) 100%);
+}
+
+@keyframes snake-move-x {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100vw);
+    }
+}
+
+@keyframes snake-move-y {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(150vh);
+    }
+}
+
+.grid-snake-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 30%, #EAEAE5 95%);
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* Animated Button Keyframes */
+@keyframes shimmer {
+  from { transform: translateX(-100%) skewX(-15deg); }
+  to { transform: translateX(200%) skewX(-15deg); }
+}

@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Aura - Hero Focus</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&family=Dancing+Script:wght@400..700&display=swap"
+        rel="stylesheet" />
+
+    <link href="firstSite.css" rel="stylesheet" />
+</head>
+
+<body
+    class="antialiased min-h-screen relative selection:bg-stone-800 selection:text-white bg-zinc-400 text-stone-900 overflow-x-hidden">
+
+    <!-- PRELOADER -->
+    <div id="preloader" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-stone-950 overflow-hidden">
+        <!-- Video Background -->
+        <video id="preloader-video" class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-screen" src="../raw_files/video.mp4" muted loop playsinline></video>
+        
+        <!-- Preloader Content Overlay -->
+        <div class="relative z-10 flex flex-col items-center justify-center w-full max-w-md px-6">
+            <!-- Logo Matches Header Style -->
+            <h1 class="font-medium tracking-tight text-3xl uppercase text-white mb-12 flex items-center gap-2">
+                ARTOOLS<span class="text-stone-400">.PRO</span>
+            </h1>
+            
+            <!-- Loading Text -->
+            <p class="text-[0.65rem] font-mono uppercase tracking-widest text-stone-300 mb-4 opacity-80" style="letter-spacing: 0.3em;">
+                Iniciando sua experiência<span id="loading-dots">...</span>
+            </p>
+            
+            <!-- Loading Bar Container -->
+            <div class="w-full h-[2px] bg-white/10 overflow-hidden relative">
+                <!-- Loading Progress Fill -->
+                <div id="loading-bar" class="h-full bg-white w-0 shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
+            </div>
+            
+            <!-- Percent Number -->
+            <div class="w-full flex justify-end mt-2">
+                <span id="loading-pct" class="text-[10px] font-mono text-stone-400">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="noise-overlay"></div>
+
+    <header class="fixed w-full z-50 my-0 transition-all duration-300" id="navbar">
+        <div class="absolute inset-0 bg-white/70 backdrop-blur-md border-b border-stone-200/50"></div>
+        <div class="max-w-[1440px] mx-auto px-6 py-4 relative flex justify-between items-center">
+            <div class="flex items-center gap-2 group cursor-pointer">
+                <div
+                    class="w-8 h-8 bg-stone-900 text-white flex items-center justify-center rounded-sm transition-transform group-hover:rotate-90 duration-500">
+                    <iconify-icon icon="solar:pen-new-square-bold-duotone" class="text-xl"></iconify-icon>
+                </div>
+                <span class="font-medium tracking-tight text-lg uppercase">
+                    ARTOOLS<span class="text-stone-400">.PRO</span>
+                </span>
+            </div>
+
+            <nav class="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-widest text-stone-500">
+                <a href="#snake-section" class="hover:text-stone-900 transition-colors">Tecnologia</a>
+                <a href="#sphere-section" class="hover:text-stone-900 transition-colors">Comprar</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <div id="cart-icon-btn" class="relative cursor-pointer group">
+                    <iconify-icon icon="solar:bag-linear"
+                        class="text-xl group-hover:text-stone-500 transition-colors"></iconify-icon>
+                    <span id="cart-counter"
+                        class="absolute -top-1.5 -right-2 bg-stone-900 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full opacity-0 transition-opacity">0</span>
+                </div>
+                <div class="hidden md:block w-px h-4 bg-stone-300"></div>
+                <iconify-icon icon="solar:hamburger-menu-linear"
+                    class="text-xl cursor-pointer md:hidden hover:text-stone-500 transition-colors"></iconify-icon>
+            </div>
+        </div>
+    </header>
+
+    <main class="hero-scrub-container relative bg-stone-50">
+        <div class="sticky top-0 h-screen w-full overflow-hidden">
+
+            <div class="absolute inset-0 z-0 flex items-center justify-center bg-stone-50">
+                <canvas id="hero-canvas" width="1280" height="720"
+                    class="hero-video w-full h-full object-cover relative z-10"></canvas>
+            </div>
+
+            <div
+                class="relative z-10 w-full h-full max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 pointer-events-none pt-12">
+                <div id="hero-content"
+                    class="col-span-1 md:col-span-10 lg:col-span-7 h-full flex flex-col justify-center px-6 md:pl-24 text-left pointer-events-auto">
+
+                    <h1
+                        class="text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tighter leading-[0.8] mb-5 text-stone-900 -ml-1 md:-ml-1">
+                        <span class="reveal-up block">A caneta</span>
+                        <span class="reveal-up block text-outline text-transparent">mais tecnológica</span>
+                        <span class="reveal-up block">do <span class="gt">mundo.</span></span>
+                    </h1>
+
+                    <p class="reveal-up text-lg md:text-xl text-stone-600 max-w-lg leading-relaxed mb-8 font-light">
+                        A Artools Precision Pen redefine o equilíbrio entre peso, fluxo e design. Feita para criadores
+                        que exigem perfeição em cada traço.
+                    </p>
+
+                    <div class="reveal-up flex flex-wrap gap-4">
+                        <a href="#sphere-section"
+                            class="relative px-8 py-4 bg-gradient-to-r from-stone-800 to-stone-900 text-white rounded-full overflow-hidden shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 block">
+                            <span class="relative z-10 text-sm font-medium tracking-wide">Comprar Agora</span>
+                        </a>
+
+                        <a href="#snake-section"
+                            class="group px-8 py-4 bg-white text-stone-900 rounded-full shadow-sm hover:shadow-md border border-stone-200 hover:border-stone-300 transition-all hover:-translate-y-1 flex items-center gap-2">
+                            <span class="text-sm font-medium tracking-wide">Explorar</span>
+                            <iconify-icon icon="solar:arrow-down-linear"
+                                class="group-hover:translate-y-0.5 transition-transform"></iconify-icon>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section class="grid-snake-section relative z-10" id="snake-section">
+        <!-- Base Grid -->
+        <div class="grid-snake-base"></div>
+
+        <!-- Container das Cobrinhas -->
+        <div class="snakes-container" id="snakes-container"></div>
+
+        <!-- Vignette layer for smooth edges -->
+        <div class="grid-snake-vignette"></div>
+
+        <!-- Bento Cards Overlay -->
+        <div class="content-layer my-6 bento-container w-full max-w-6xl mx-auto px-6">
+
+            <div id="bento-title"
+                class="bento-card mb-20 text-center flex flex-col items-center justify-center max-w-4xl mx-auto bento-title-glass relative z-[60] shadow-2xl">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tighter text-stone-900 mb-6">
+                    O ápice da <span class="gt">Tecnologia</span>.
+                </h2>
+                <p class="text-sm md:text-base text-stone-500 font-light leading-relaxed max-w-xl">
+                    Você troca a ponta e ela funciona como caneta para mouse pad com carregamento USB.
+                </p>
+            </div>
+
+            <!-- Bento Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 h-auto min-h-[500px]">
+
+                <!-- Main Card (Left) -->
+                <div
+                    class="bento-card lg:col-span-12 xl:col-span-7 bg-[#FFFFFF] border border-stone-300 rounded-[2rem] p-8 md:p-10 flex flex-col justify-between relative overflow-hidden shadow-2xl hover:shadow-2xl transition-shadow duration-700 bento-card-glass">
+                    <!-- Pen Image -->
+                    <div
+                        class="absolute right-[-15%] top-[-10%] w-[130%] md:w-[95%] lg:w-[90%] h-[120%] mix-blend-darken bento-pen-anim pointer-events-none flex items-center justify-center">
+                        <img src="../raw_files/pencil3.jpeg" alt="Artools Precision Pen Core"
+                            class="w-full h-full object-contain bento-pen-image">
+                    </div>
+
+                    <div class="relative z-10">
+                        <div
+                            class="inline-flex px-3 py-1.5 rounded-md text-[0.65rem] font-mono tracking-widest uppercase text-stone-700 mb-6 bg-white border border-stone-200 shadow-sm">
+                            Titanium Core // V1.0
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 max-w-sm mt-64 lg:mt-0">
+                        <div
+                            class="w-12 h-12 bg-stone-900 text-white rounded-xl flex items-center justify-center mb-6 shadow-xl">
+                            <iconify-icon icon="solar:rocket-bold-duotone" class="text-2xl"></iconify-icon>
+                        </div>
+                        <h3 class="text-3xl font-semibold tracking-tight text-stone-900 mb-3">Engenharia Espacial</h3>
+                        <p class="text-stone-600 text-sm leading-relaxed font-light">
+                            Construída sob rigorosos parâmetros da NASA. A caneta possui câmara de pressurização interna
+                            capaz de escrever em gravidade zero, debaixo d'água e em temperaturas extremas.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Side Grid -->
+                <div class="lg:col-span-5 grid grid-cols-2 gap-6">
+
+                    <!-- Top Left: Resistance -->
+                    <div
+                        class="bento-card col-span-2 md:col-span-1 bg-stone-900 rounded-[2rem] p-8 flex flex-col justify-between relative overflow-hidden shadow-xl group">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-stone-800 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                        </div>
+                        <div class="relative z-10 flex justify-between items-start">
+                            <span
+                                class="text-[0.65rem] font-mono text-stone-400 uppercase tracking-widest">Resistência</span>
+                            <span
+                                class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]"></span>
+                        </div>
+                        <div class="relative z-10 mt-16">
+                            <h4 class="text-5xl font-bold text-white tracking-tighter mb-2">14<span
+                                    class="text-2xl text-stone-400 font-light">g</span></h4>
+                            <p
+                                class="text-[0.65rem] text-stone-400 font-mono uppercase tracking-widest leading-relaxed">
+                                Alumínio<br>Aeroespacial 6061</p>
+                        </div>
+                    </div>
+
+                    <!-- Top Right: Ink -->
+                    <div
+                        class="bento-card col-span-2 md:col-span-1 bg-[#FFFFFF] border border-stone-300 rounded-[2rem] p-8 flex flex-col relative overflow-hidden group shadow-2xl hover:shadow-2xl transition-shadow duration-500 bento-card-glass">
+                        <div class="flex items-center gap-2 mb-10 text-stone-900">
+                            <iconify-icon icon="solar:drop-bold-duotone" class="text-xl"></iconify-icon>
+                            <span class="text-[0.65rem] font-bold uppercase tracking-widest text-stone-900">Tinta
+                                Nano</span>
+                        </div>
+                        <div
+                            class="text-[0.6rem] font-mono text-stone-500 space-y-3 opacity-80 group-hover:opacity-100 transition-opacity">
+                            <div class="flex justify-between border-b border-stone-200/50 pb-2">
+                                <span>pigment_density:</span> <span class="text-stone-900">98%</span>
+                            </div>
+                            <div class="flex justify-between border-b border-stone-200/50 pb-2"><span>flow_rate:</span>
+                                <span class="text-stone-900">0.3mm/s</span>
+                            </div>
+                            <div class="flex justify-between border-b border-stone-200/50 pb-2"><span>dry_time:</span>
+                                <span class="text-stone-900">0.1s</span>
+                            </div>
+                            <div class="pt-2 text-stone-900 font-bold tracking-widest">• PIGMENTAÇÃO MOLECULAR</div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom: Wide Card (Kinetics) -->
+                    <div
+                        class="bento-card col-span-2 bg-[#FFFFFF] shadow-2xl border border-stone-300 rounded-[2rem] p-8 relative overflow-hidden group hover:shadow-2xl transition-shadow duration-500 bento-card-glass">
+
+                        <!-- Simulated chart/bars in background -->
+                        <div class="absolute bottom-0 right-8 h-28 flex items-end gap-2 opacity-30 pointer-events-none">
+                            <div
+                                class="w-8 md:w-10 bg-stone-300 rounded-t-sm h-[30%] group-hover:bg-stone-400 group-hover:h-[40%] transition-all duration-700">
+                            </div>
+                            <div
+                                class="w-8 md:w-10 bg-stone-300 rounded-t-sm h-[60%] group-hover:bg-stone-400 group-hover:h-[50%] transition-all duration-700 delay-75">
+                            </div>
+                            <div
+                                class="w-8 md:w-10 bg-stone-400 rounded-t-sm h-[40%] group-hover:bg-stone-500 group-hover:h-[70%] transition-all duration-700 delay-100">
+                            </div>
+                            <div
+                                class="w-8 md:w-10 bg-stone-800 rounded-t-sm h-[90%] group-hover:bg-stone-900 group-hover:h-[100%] transition-all duration-700 delay-150">
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 flex justify-between items-start mb-12">
+                            <span
+                                class="text-[0.65rem] font-mono text-stone-500 uppercase tracking-widest">Cinemática</span>
+                            <iconify-icon icon="solar:tuning-square-2-bold-duotone"
+                                class="text-2xl text-stone-400"></iconify-icon>
+                        </div>
+                        <div class="relative z-10 max-w-[60%]">
+                            <h4 class="text-2xl font-semibold tracking-tight text-stone-900 mb-2">Equilíbrio Neutro</h4>
+                            <p class="text-[0.7rem] leading-relaxed text-stone-500 font-light">Centro de gravidade
+                                matemático (CG: 48.2%) calibrado para anular a fadiga muscular após horas de uso.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4th Fold: Interactive Rotating Sphere Background & Product Card -->
+    <section id="sphere-section"
+        class="relative overflow-hidden bg-[#F5F5F7] min-h-[100vh] flex items-center justify-center">
+        <!-- TOP MARQUEE BORDER -->
+        <div class="marquee-divider absolute top-0 left-0 z-20">
+            <div class="animate-marquee whitespace-nowrap drop-shadow-md">
+                <span class="mx-8 marquee-text">PRECISION ★ ENERGY ★ FLUIDITY ★ ELEGANCE ★ CRAFT ★ LEGACY ★ SOUL ★ FLOW
+                    ★ INK</span>
+                <span class="mx-8 marquee-text">PRECISION ★ ENERGY ★ FLUIDITY ★ ELEGANCE ★ CRAFT ★ LEGACY ★ SOUL ★ FLOW
+                    ★ INK</span>
+                <span class="mx-8 marquee-text">PRECISION ★ ENERGY ★ FLUIDITY ★ ELEGANCE ★ CRAFT ★ LEGACY ★ SOUL ★ FLOW
+                    ★ INK</span>
+                <span class="mx-8 marquee-text">PRECISION ★ ENERGY ★ FLUIDITY ★ ELEGANCE ★ CRAFT ★ LEGACY ★ SOUL ★ FLOW
+                    ★ INK</span>
+            </div>
+        </div>
+        <!-- 3D Sphere Background -->
+        <div id="canvas-container" class="absolute inset-0 z-0 pointer-events-none"></div>
+
+        <!-- Foreground Content -->
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 flex justify-end items-center h-full">
+            <!-- Product Card -->
+            <div id="sphere-card"
+                class="relative w-full max-w-[22rem] md:max-w-md rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl bg-white group hover:-translate-y-2 transition-transform duration-500">
+
+                <!-- Background Image (Pen) with Overlay -->
+                <!-- Use absolute path from brain for the prototype -->
+                <div class="absolute inset-0 z-0 bg-white">
+                    <img src="../video_frames/frame_0045.jpg"
+                        class="w-full h-[120%] object-cover object-top -translate-y-[10%] group-hover:scale-105 transition-transform duration-700 ease-out"
+                        alt="Artools Pro Pen" />
+                    <!-- Dark gradient overlay to make text pop -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10"></div>
+                </div>
+
+                <!-- Card Content -->
+                <div class="relative z-10 p-8 md:p-10 flex flex-col h-full min-h-[500px] justify-between">
+                    <!-- Top: Title -->
+                    <div>
+                        <h3 class="text-3xl font-semibold text-white tracking-tight">ARTOOLS.PRO</h3>
+                        <p class="text-white/70 text-xs mt-1 uppercase tracking-widest font-mono">Edição Limitada</p>
+                    </div>
+
+                    <!-- Bottom: Marketing info & Button -->
+                    <div class="mt-auto space-y-6">
+                        <div>
+                            <p class="text-white/90 text-[15px] font-light leading-relaxed mb-4">
+                                Respire fundo. Imagine. Materialize. Com ela, a precisão encontra a fluidez e cada traço
+                                transforma a sua visão em realidade.
+                            </p>
+                            <p class="text-4xl font-semibold text-white tracking-tighter">
+                                R$ 299<span class="text-xl text-white/50 font-medium">,00</span>
+                            </p>
+                        </div>
+
+                        <!-- Animated Button (Cobrinha Branca) -->
+                        <button id="buy-now-btn"
+                            class="w-full group/btn relative flex items-center justify-center overflow-hidden rounded-full p-[2px] leading-none transition-transform hover:scale-[1.02] duration-300">
+                            <!-- Shimmer Border Ring -->
+                            <span
+                                class="absolute inset-[0] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)]"></span>
+
+                            <!-- Button Body -->
+                            <span
+                                class="relative flex w-full items-center justify-center rounded-full bg-black py-4 px-6 ring-1 ring-white/10">
+                                <!-- Shine Sweep -->
+                                <span class="absolute inset-0 overflow-hidden rounded-full">
+                                    <span
+                                        class="absolute top-0 left-0 h-full w-full -translate-x-full -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover/btn:animate-[shimmer_1.5s_infinite]"></span>
+                                </span>
+                                <!-- Button Content -->
+                                <span class="relative z-10 flex items-center gap-3">
+                                    <span class="text-sm font-semibold uppercase tracking-widest text-white">Comprar
+                                        Agora</span>
+                                    <iconify-icon
+                                        class="text-xl text-neutral-400 group-hover/btn:text-white transition-colors duration-200 group-hover/btn:translate-x-1"
+                                        icon="solar:cart-bold-duotone"></iconify-icon>
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM MARQUEE BORDER -->
+        <div class="marquee-divider absolute bottom-0 left-0 z-20">
+            <div class="animate-marquee-reverse whitespace-nowrap drop-shadow-md">
+                <span class="mx-8 marquee-text">PRECISION ★ ENERGY ★ FLUIDITY ★ ELEGANCE ★ CRAFT ★ LEGACY ★ SOUL ★ FLOW
+                    ★ INK</span>
+                <span class="mx-8 marquee-text">PRECISION ★ ENERGY ★ FLUIDITY ★ ELEGANCE ★ CRAFT ★ LEGACY ★ SOUL ★ FLOW
+                    ★ INK</span>
+                <span class="mx-8 marquee-text">PRECISION ★ ENERGY ★ FLUIDITY ★ ELEGANCE ★ CRAFT ★ LEGACY ★ SOUL ★ FLOW
+                    ★ INK</span>
+                <span class="mx-8 marquee-text">PRECISION ★ ENERGY ★ FLUIDITY ★ ELEGANCE ★ CRAFT ★ LEGACY ★ SOUL ★ FLOW
+                    ★ INK</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-stone-950 py-20 px-6 md:px-12 lg:px-20 border-t border-black/5 relative z-10 overflow-hidden">
+
+        <!-- Background Waves SVG from 3rd fold -->
+        <div class="absolute inset-0 z-0 w-full h-full pointer-events-none opacity-50">
+            <svg viewBox="0 0 1000 800" class="w-full h-full object-cover" preserveAspectRatio="xMidYMid slice"
+                xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="lightFlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+                        <stop offset="40%" style="stop-color:#f5f5f5;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="midShadow" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#dcdcdc;stop-opacity:1" />
+                        <stop offset="60%" style="stop-color:#b0b0b0;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#808080;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="deepShadow" x1="60%" y1="0%" x2="40%" y2="100%">
+                        <stop offset="0%" style="stop-color:#666666;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#2a2a2a;stop-opacity:1" />
+                    </linearGradient>
+                    <radialGradient id="highlight" cx="20%" cy="20%" r="80%" fx="20%" fy="20%">
+                        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.8" />
+                        <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+                    </radialGradient>
+                    <linearGradient id="concaveShadow" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.2" />
+                        <stop offset="40%" style="stop-color:#4a4a4a;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:0.9" />
+                    </linearGradient>
+                    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+                        <feMerge>
+                            <feMergeNode in="coloredBlur" />
+                            <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                    </filter>
+                </defs>
+
+                <rect width="1000" height="800" fill="#fcfcfc" />
+
+                <g class="wave-group">
+                    <path class="wave-path" d="M0,0 L1000,0 L1000,300 C800,450 400,100 0,350 Z"
+                        fill="url(#lightFlow)" />
+                </g>
+                <rect width="1000" height="400" fill="url(#highlight)" />
+
+                <g class="wave-group">
+                    <path class="wave-path" d="M0,320 C250,150 750,550 1000,350 L1000,800 L0,800 Z"
+                        fill="url(#midShadow)" />
+                </g>
+
+                <g class="wave-group">
+                    <path class="wave-path" d="M150,380 C350,550 750,950 900,650 C800,850 400,900 150,380 Z"
+                        fill="url(#deepShadow)" opacity="0.8" />
+                </g>
+
+                <g class="wave-group">
+                    <path class="wave-path" d="M0,500 C400,850 800,450 1000,600 L1000,800 L0,800 Z"
+                        fill="url(#deepShadow)" />
+                </g>
+
+                <g class="wave-group">
+                    <path class="wave-path" d="M400,800 C600,650 900,750 1000,550 L1000,800 Z" fill="#1a1a1a" />
+                </g>
+
+                <g class="wave-group-overlay">
+                    <path class="wave-path" d="M0,320 C250,150 750,550 1000,350 L1000,380 C750,580 250,180 0,350 Z"
+                        fill="url(#concaveShadow)" />
+                </g>
+
+                <!-- Neon Pulses (Dynamically generated in JS) -->
+                <g id="neon-lines" fill="none" stroke-width="2" style="mix-blend-mode: color-dodge;">
+                </g>
+            </svg>
+        </div>
+
+        <!-- Dark Gradient Overlay for Legibility -->
+        <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-900/80 to-stone-900/40 z-0"></div>
+
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12 relative z-10">
+            <!-- Brand Column -->
+            <div class="max-w-xs space-y-6">
+                <!-- Logo/Brand Name -->
+                <div class="flex items-center gap-3 w-max group cursor-pointer">
+                    <div
+                        class="w-8 h-8 bg-white text-stone-900 flex items-center justify-center rounded shadow-sm group-hover:bg-stone-200 transition-colors">
+                        <iconify-icon icon="solar:pen-new-square-bold-duotone" width="18"></iconify-icon>
+                    </div>
+                    <span class="font-bold text-lg tracking-widest text-white uppercase font-mono">Artools.pro</span>
+                </div>
+
+                <!-- Tagline -->
+                <p class="text-sm text-stone-300 leading-relaxed font-light">
+                    Precisão e fluidez. Ferramentas criadas para os mestres do amanhã.
+                </p>
+
+                <!-- Copyright -->
+                <div class="text-[11px] text-stone-500 font-mono tracking-wide pt-4">
+                    © 2024 Artools.pro. Todos os direitos reservados.
+                </div>
+            </div>
+
+            <!-- Links Columns -->
+            <div class="flex flex-wrap md:flex-nowrap gap-12 md:gap-24">
+                <!-- Products -->
+                <div class="space-y-5">
+                    <h4 class="text-xs font-bold text-white uppercase tracking-widest font-mono">Produtos</h4>
+                    <ul class="space-y-3 text-sm text-stone-400">
+                        <li><a href="#" class="hover:text-white transition-colors duration-200">Caneta Veo</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200">Cadernos Premium</a>
+                        </li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200">Refis e Tintas</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social -->
+                <div class="space-y-5">
+                    <h4 class="text-xs font-bold text-white uppercase tracking-widest font-mono">Social</h4>
+                    <ul class="space-y-3 text-sm text-stone-400">
+                        <li><a href="#"
+                                class="hover:text-white transition-colors duration-200 flex items-center gap-2"><iconify-icon
+                                    icon="simple-icons:instagram" width="14"></iconify-icon> Instagram</a></li>
+                        <li><a href="#"
+                                class="hover:text-white transition-colors duration-200 flex items-center gap-2"><iconify-icon
+                                    icon="simple-icons:behance" width="14"></iconify-icon> Behance</a></li>
+                        <li><a href="#"
+                                class="hover:text-white transition-colors duration-200 flex items-center gap-2"><iconify-icon
+                                    icon="simple-icons:x" width="14"></iconify-icon> Twitter / X</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal -->
+                <div class="space-y-5">
+                    <h4 class="text-xs font-bold text-white uppercase tracking-widest font-mono">Legal</h4>
+                    <ul class="space-y-3 text-sm text-stone-400">
+                        <li><a href="#" class="hover:text-white transition-colors duration-200">Termos de Uso</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200">Privacidade</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-200">Devoluções</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="fixed inset-0 z-[100] overflow-hidden">
+        <!-- Overlay -->
+        <div id="checkout-overlay"
+            class="absolute inset-0 bg-stone-900/40 backdrop-blur-sm opacity-0 transition-opacity duration-500"></div>
+
+        <!-- Side Panel -->
+        <aside id="checkout-panel"
+            class="fixed inset-y-0 right-0 w-full max-w-md min-h-0 bg-white shadow-2xl translate-x-full transition-transform duration-500 flex flex-col z-50">
+            <!-- Header -->
+            <div class="px-8 py-6 border-b border-stone-200 flex justify-between items-center bg-stone-50/50">
+                <h2 class="text-lg font-bold tracking-tight text-stone-900">Checkout</h2>
+                <button id="close-modal-btn"
+                    class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-stone-200 transition-colors text-stone-500 hover:text-stone-900">
+                    <iconify-icon icon="solar:close-circle-linear" class="text-2xl"></iconify-icon>
+                </button>
+            </div>
+
+            <!-- Body Content -->
+            <div id="checkout-body" data-lenis-prevent
+                class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden relative overscroll-contain">
+
+                <!-- State 1: Form -->
+                <div id="checkout-form-state" class="p-8 space-y-8 transition-opacity duration-300">
+                    <!-- Total Price & Controls -->
+                    <div class="bg-stone-50 rounded-2xl p-6 border border-stone-100 flex flex-col gap-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-stone-500 font-medium text-sm">Total da Compra</span>
+                            <span id="checkout-total" class="text-2xl font-bold tracking-tighter text-stone-900">R$
+                                0,00</span>
+                        </div>
+                        <!-- Quantity Controls -->
+                        <div class="flex justify-between items-center pt-4 border-t border-stone-100">
+                            <span class="text-stone-500 text-sm">Quantidade</span>
+                            <div
+                                class="flex items-center gap-2 bg-white border border-stone-200 rounded-full px-2 py-1">
+                                <button type="button" id="qty-minus"
+                                    class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-stone-100 text-stone-500 hover:text-stone-900 transition-colors">
+                                    <iconify-icon icon="solar:minus-linear"></iconify-icon>-
+                                </button>
+                                <span id="checkout-qty" class="text-stone-900 font-medium w-4 text-center">0</span>
+                                <button type="button" id="qty-plus"
+                                    class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-stone-100 text-stone-500 hover:text-stone-900 transition-colors">
+                                    <iconify-icon icon="solar:plus-linear"></iconify-icon>+
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="checkout-form" class="space-y-6">
+                        <!-- Personal Info -->
+                        <div class="space-y-4">
+                            <h3
+                                class="text-xs font-bold text-stone-900 uppercase tracking-widest font-mono border-b border-stone-100 pb-2">
+                                Dados Pessoais</h3>
+                            <div class="space-y-3">
+                                <input id="nome-input" type="text" placeholder="Nome Completo" required
+                                    class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent transition-all placeholder:text-stone-400">
+                                <input id="email-input" type="email" placeholder="E-mail" required
+                                    class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent transition-all placeholder:text-stone-400">
+                                <div class="grid grid-cols-2 gap-3">
+                                    <input id="cpf-input" type="text" placeholder="CPF" required maxlength="14"
+                                        class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent transition-all placeholder:text-stone-400">
+                                    <input id="tel-input" type="tel" placeholder="Telefone" required maxlength="15"
+                                        class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent transition-all placeholder:text-stone-400">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="space-y-4">
+                            <h3
+                                class="text-xs font-bold text-stone-900 uppercase tracking-widest font-mono border-b border-stone-100 pb-2">
+                                Endereço</h3>
+                            <div class="space-y-3">
+                                <input id="cep-input" type="text" placeholder="CEP" required maxlength="9"
+                                    class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent transition-all placeholder:text-stone-400">
+                                <div class="grid grid-cols-3 gap-3">
+                                    <input id="rua-input" type="text" placeholder="Rua" required
+                                        class="col-span-2 w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent transition-all placeholder:text-stone-400">
+                                    <input id="num-input" type="text" placeholder="Número" required
+                                        class="col-span-1 w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent transition-all placeholder:text-stone-400">
+                                </div>
+                                <input id="comp-input" type="text" placeholder="Complemento"
+                                    class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent transition-all placeholder:text-stone-400">
+                                <div class="grid grid-cols-2 gap-3">
+                                    <input id="cidade-input" type="text" placeholder="Cidade" required
+                                        class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent transition-all placeholder:text-stone-400">
+                                    <input id="estado-input" type="text" placeholder="Estado" required
+                                        class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent transition-all placeholder:text-stone-400">
+                                </div>
+                                <input id="pais-input" type="text" placeholder="País" value="Brasil" required
+                                    class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent transition-all placeholder:text-stone-400">
+                            </div>
+                        </div>
+
+                        <!-- Payment -->
+                        <div class="space-y-4">
+                            <h3
+                                class="text-xs font-bold text-stone-900 uppercase tracking-widest font-mono border-b border-stone-100 pb-2">
+                                Pagamento</h3>
+                            <div class="space-y-3">
+                                <input id="titular-input" type="text" placeholder="Titular do Cartão" required
+                                    class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent transition-all placeholder:text-stone-400">
+                                <input id="cartao-input" type="text" placeholder="Número do Cartão" required
+                                    maxlength="19"
+                                    class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent transition-all placeholder:text-stone-400">
+                                <div class="grid grid-cols-2 gap-3">
+                                    <input id="validade-input" type="text" placeholder="Validade (MM/AA)" required
+                                        maxlength="5"
+                                        class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent transition-all placeholder:text-stone-400">
+                                    <input id="cvv-input" type="text" placeholder="CVV" required maxlength="3"
+                                        class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent transition-all placeholder:text-stone-400">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="pt-4 pb-8 border-t border-stone-100 mt-8">
+                            <button type="submit"
+                                class="w-full group/btn relative flex items-center justify-center overflow-hidden rounded-full p-[2px] leading-none transition-transform hover:scale-[1.02] duration-300">
+                                <span
+                                    class="absolute inset-[0] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)]"></span>
+                                <span
+                                    class="relative flex w-full items-center justify-center rounded-full bg-black py-4 px-6 ring-1 ring-white/10">
+                                    <span class="absolute inset-0 overflow-hidden rounded-full">
+                                        <span
+                                            class="absolute top-0 left-0 h-full w-full -translate-x-full -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover/btn:animate-[shimmer_1.5s_infinite]"></span>
+                                    </span>
+                                    <span class="relative z-10 flex items-center gap-3">
+                                        <span
+                                            class="text-sm font-semibold uppercase tracking-widest text-white">Finalizar
+                                            Compra</span>
+                                        <iconify-icon
+                                            class="text-xl text-neutral-400 group-hover/btn:text-white transition-colors duration-200 group-hover/btn:translate-x-1"
+                                            icon="solar:check-circle-linear"></iconify-icon>
+                                    </span>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- State 2: Success Message (Hidden by default) -->
+                <div id="checkout-success-state"
+                    class="absolute inset-0 p-8 flex flex-col items-center justify-center text-center opacity-0 pointer-events-none transition-opacity duration-300 bg-white z-10">
+                    <div
+                        class="w-20 h-20 bg-stone-900 rounded-full flex items-center justify-center mb-6 text-white text-4xl shadow-xl">
+                        <iconify-icon icon="solar:check-read-linear"></iconify-icon>
+                    </div>
+                    <h2 class="text-2xl font-bold tracking-tight text-stone-900 mb-4">Parabéns pela sua compra!</h2>
+                    <p class="text-stone-600 leading-relaxed max-w-sm mb-10">
+                        Sua ARTOOLS.PRO chegará em <span class="font-bold text-stone-900">5 dias</span> e foi enviado
+                        para o seu e-mail o código de rastreio.
+                    </p>
+                    <button id="success-ok-btn"
+                        class="w-full max-w-[200px] group/btn relative flex items-center justify-center overflow-hidden rounded-full p-[2px] leading-none transition-transform hover:scale-[1.05] duration-300">
+                        <span
+                            class="absolute inset-[0] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)]"></span>
+                        <span
+                            class="relative flex w-full items-center justify-center rounded-full bg-black py-4 px-8 ring-1 ring-white/10">
+                            <span class="absolute inset-0 overflow-hidden rounded-full">
+                                <span
+                                    class="absolute top-0 left-0 h-full w-full -translate-x-full -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover/btn:animate-[shimmer_1.5s_infinite]"></span>
+                            </span>
+                            <span class="relative z-10 font-bold uppercase tracking-widest text-white">
+                                OK
+                            </span>
+                        </span>
+                    </button>
+                </div>
+
+            </div>
+        </aside>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed right-6 md:right-10 bottom-6 md:bottom-10 z-[90] w-12 h-12 bg-stone-900 border border-stone-700 text-white rounded-full flex items-center justify-center shadow-2xl transition-transform hover:scale-110 opacity-0 pointer-events-none translate-y-10 group">
+        <iconify-icon icon="solar:alt-arrow-up-linear" class="text-2xl group-hover:-translate-y-1 transition-transform"></iconify-icon>
+    </button>
+
+    <!-- Three.js Visuals (Subtle Particles) -->
+    <script id="vertexShader" type="x-shader/x-vertex">
+uniform float uTime; uniform float uDistortion; uniform float uSize; uniform vec2 uMouse; varying float vNoise; 
+vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; } 
+vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; } 
+vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); } 
+vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; } 
+float snoise(vec3 v) { const vec2 C = vec2(1.0/6.0, 1.0/3.0) ; const vec4 D = vec4(0.0, 0.5, 1.0, 2.0); vec3 i = floor(v + dot(v, C.yyy) ); vec3 x0 = v - i + dot(i, C.xxx) ; vec3 g = step(x0.yzx, x0.xyz); vec3 l = 1.0 - g; vec3 i1 = min( g.xyz, l.zxy ); vec3 i2 = max( g.xyz, l.zxy ); vec3 x1 = x0 - i1 + 1.0 * C.xxx; vec3 x2 = x0 - i2 + 2.0 * C.xxx; vec3 x3 = x0 - 1.0 + 3.0 * C.xxx; i = mod289(i); vec4 p = permute( permute( permute( i.z + vec4(0.0, i1.z, i2.z, 1.0 )) + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) + i.x + vec4(0.0, i1.x, i2.x, 1.0 )); float n_ = 1.0/7.0; vec3 ns = n_ * D.wyz - D.xzx; vec4 j = p - 49.0 * floor(p * ns.z *ns.z); vec4 x_ = floor(j * ns.z); vec4 y_ = floor(j - 7.0 * x_ ); vec4 x = x_ *ns.x + ns.yyyy; vec4 y = y_ *ns.x + ns.yyyy; vec4 h = 1.0 - abs(x) - abs(y); vec4 b0 = vec4( x.xy, y.xy ); vec4 b1 = vec4( x.zw, y.zw ); vec4 s0 = floor(b0)*2.0 + 1.0; vec4 s1 = floor(b1)*2.0 + 1.0; vec4 sh = -step(h, vec4(0.0)); vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ; vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ; vec3 p0 = vec3(a0.xy,h.x); vec3 p1 = vec3(a0.zw,h.y); vec3 p2 = vec3(a1.xy,h.z); vec3 p3 = vec3(a1.zw,h.w); vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3))); p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w; vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0); m = m * m; return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ) ); } 
+void main() { vec3 pos = position; float noise = snoise(vec3(pos.x * 0.5 + uTime * 0.15, pos.y * 0.5, pos.z * 0.5)); vNoise = noise; vec3 newPos = pos + (normal * noise * uDistortion); float dist = distance(uMouse * 10.0, newPos.xy); float interaction = smoothstep(6.0, 0.0, dist); newPos.z += interaction * 1.5; vec4 mvPosition = modelViewMatrix * vec4(newPos, 1.0); gl_Position = projectionMatrix * mvPosition; gl_PointSize = uSize * (20.0 / -mvPosition.z); } 
+    </script>
+    <script id="fragmentShader" type="x-shader/x-fragment">
+uniform vec3 uColor; varying float vNoise; 
+void main() { vec2 center = gl_PointCoord - vec2(0.5); float dist = length(center); if (dist > 0.45) discard; float alpha = 1.0; vec3 color1 = uColor; vec3 color2 = vec3(0.3, 0.3, 0.4); vec3 finalColor = mix(color1, color2, vNoise * 0.5 + 0.5); gl_FragColor = vec4(finalColor, alpha); } 
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>
