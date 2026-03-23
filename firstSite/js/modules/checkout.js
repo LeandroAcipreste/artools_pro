@@ -112,9 +112,10 @@ export const initCheckout = () => {
   if (buyNowBtn) {
     buyNowBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      currentCount++;
+      if (currentCount === 0) currentCount = 1;
       updateTotal();
       gsap.fromTo(cartCounter, { scale: 0.9, y: 5 }, { scale: 1, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+      openModal();
     });
   }
 
